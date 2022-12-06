@@ -29,17 +29,14 @@
      let newEntry = document.getElementById("newEntry")
      let savedDataFile = document.getElementById("savedDataFile")
      const fileReader = new FileReader()
-     let text
      
      
      savedDataFile.addEventListener("change", function () {
       fileReader.onload = function () {
       text = JSON.parse(fileReader.result)
           for (var i = 0; i < text.source.length; i++) {
-      let opt = document.createElement('option')
-      
-      opt.innerHTML = text.source[i].name;  
-              
+      let opt = document.createElement('option')   
+      opt.innerHTML = text.source[i].name;            
               sourceName.appendChild(opt);       
           }
      }
@@ -64,10 +61,7 @@
          let oldText = text.source[document.getElementById('sourceName').selectedIndex - 1].notes
          
          oldText.push(entryData)  
-         console.log(text)
-     
-         
-
+   
          const blob = new Blob([JSON.stringify(text)], {type: "application/json"})
          let a = document.createElement("a")
          a.href = URL.createObjectURL(blob)
