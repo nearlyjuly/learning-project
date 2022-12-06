@@ -4,7 +4,7 @@ Informal learning project for working with web5 utilities
 # Aim
 Change the prototype into a notetaking application that reads and writes to a dwn.
 Accept a list of entries (book titles, list of classes) via VC and/or granting access to someone else.
-Import a list of book titles from a separate personal book list using https://schema.org/Book 
+Import a list of book titles from a separate personal book list which uses https://schema.org/Book 
 
 # How to use the prototype
 Change the settings on your computer to prompt you when saving a file. 
