@@ -44,16 +44,12 @@
         "notes": []
          }
          
-    let uploadedText = text.source[0]
-    let addEntryJson = entryData
-    let updatedEntries = {
-         "source": [
-             uploadedText,
-             addEntryJson
-         ]
-         }
+    let uploadedText = text.source
+    
+    uploadedText.push(entryData)
+      let newEntries = {"source":uploadedText}
 
-     const blob = new Blob([JSON.stringify(updatedEntries)], {type: "application/json"})
+     const blob = new Blob([JSON.stringify(newEntries)], {type: "application/json"})
        let a = document.createElement("a")
        a.href = URL.createObjectURL(blob)
        a.setAttribute("download", "entries.json")
