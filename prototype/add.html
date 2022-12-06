@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>Notetaker - add a new source type</h1>
+
+<form id="addEntryForm">
+ <label for="savedDataFile">Upload your data file</label>
+ <input type="file" id="savedDataFile" accept=".json"/><br>  
+ <label for="name">Name:</label><br>
+ <input type="text" id="name" name="Name"><br>
+ <label for="sourcetype">Sourcetype:</label><br>
+ <select id="sourcetype" name="sourcetype">
+    <option value="Publication">Publication</option>
+    <option value="Study">Study</option>
+    <option value="General">General</option>
+ </select>
+</form><br>
+ <button id="addEntry">Create new entry</button>
+ <p id="newEntry"><br/></p>
+</body>
+    
+<script>
+  let name = document.getElementById("name")
+  let sourcetype = document.getElementById("sourcetype")
+  let addEntry = document.getElementById("addEntry")
+  let newEntry = document.getElementById("newEntry")
+  let savedDataFile = document.getElementById("savedDataFile")
+  const fileReader = new FileReader()
+  let text
+     
+  savedDataFile.addEventListener("change", function () {
+    fileReader.onload = function () {
+      text = JSON.parse(fileReader.result)
+    }
+      fileReader.readAsText(this.files[0])
+  })
+     
+  addEntry.addEventListener("click", function () {
+    let entryData =            
+         {
+        "name":name.value,
+        "sourcetype":sourcetype.value,
+        "notes": []
+         }
+         
+    let uploadedText = text.source[0]
+    let addEntryJson = entryData
+    let updatedEntries = {
+         "source": [
+             uploadedText,
+             addEntryJson
+         ]
+         }
+
+     const blob = new Blob([JSON.stringify(updatedEntries)], {type: "application/json"})
+       let a = document.createElement("a")
+       a.href = URL.createObjectURL(blob)
+       a.setAttribute("download", "entries.json")
+       document.body.appendChild(a);
+       a.click()
+       a.href = URL.revokeObjectURL(blob)
+       document.getElementById("addEntryForm").reset()
+     })
+        
+        
+
+     
+     
+    </script>
+</html>

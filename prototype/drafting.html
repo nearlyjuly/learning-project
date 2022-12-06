@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>   
+  <label for="savedDataFile">Upload your data file</label>
+    <input type="file" id="savedDataFile" accept=".json"/><br>  
+  <select id="sourceName">
+      <option selected hidden>Choose source</option>
+  </select>
+  <select id="notes">
+      <option selected hidden>Choose note</option>
+  </select>
+  <button onClick="appendDraft()">Add note to draft</button>
+  <p id=essaydraft></p>
+  <button id="savefile">Save draft</button>
+</body>
+    
+<script>
+  let sourceName = document.getElementById('sourceName');
+  let notes = document.getElementById('notes');
+  const fileReader = new FileReader()
+  let essaydraft = document.getElementById('essaydraft');   
+  let savefile = document.getElementById('savefile')
+  let opttwo = document.createElement('option')
+              
+    savedDataFile.addEventListener("change", function () {
+      fileReader.onload = function () {
+        text = JSON.parse(fileReader.result)    
+        for (var i = 0; i < text.source.length; i++) {  
+          let opt = document.createElement('option')
+          opt.innerHTML = text.source[i].name
+          sourceName.appendChild(opt)    
+          }
+      }
+       
+       fileReader.readAsText(this.files[0])
+         
+     })
+              
+    sourceName.addEventListener('change', () => { 
+      opttwo.length = 0  
+        let notesArray = [text.source[document.getElementById('sourceName').selectedIndex - 1].notes]
+        console.log(notesArray)
+           for  (var j = 0; j < notesArray[0].length; j++) {
+                 opttwo.innerHTML = (notesArray[j][j])
+                 notes.appendChild(opttwo)
+           }
+      
+    })
+ 
+     function appendDraft () {                
+       info = notes.value + "(" + sourceName.value + ")" + "\r\n" + "<br>"
+       essaydraft.insertAdjacentHTML('beforeend', info)  
+     }
+  
+       savefile.addEventListener("click", function () {
+         const blob = new Blob([essaydraft.textContent], {type: "text/plain"}, {endings: "native"})
+         let a = document.createElement("a")
+         a.href = URL.createObjectURL(blob)
+         a.setAttribute("download", "draft.txt")
+         document.body.appendChild(a);
+         a.click()
+         a.href = URL.revokeObjectURL(blob)   
+       })
+</script>    
+
+</html>

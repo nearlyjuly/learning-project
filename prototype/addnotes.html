@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>Notetaker - add a new note for an existing entry</h1>
+
+<form id="addEntryForm">
+ <label for="savedDataFile">Upload your data file</label>
+ <input type="file" id="savedDataFile" accept=".json"/><br>  
+  <select id="sourceName"><option selected hidden>choose source name</option></select><br>
+  <label for="sourceType">Source Type</label><br>
+    <textarea id="sourceType"></textarea><br>
+    <label for="existingNotes">Existing notes</label><br>
+    <textarea id="existingNotes"></textarea><br>
+    
+  <label for="note">Add new note:</label><br>
+  <input type="text" id="note" name="note"><br>
+  </form><br>
+    <button id="addEntry">Save new note</button>
+      <p id="newEntry"><br/></p>
+</body>
+    
+    <script>
+     
+     let sourceName = document.getElementById("sourceName")
+     let sourceType = document.getElementById("sourceType")
+     let existingNotes = document.getElementById("existingNotes")
+     let note = document.getElementById("note")
+     let newEntry = document.getElementById("newEntry")
+     let savedDataFile = document.getElementById("savedDataFile")
+     const fileReader = new FileReader()
+     let text
+     
+     
+     savedDataFile.addEventListener("change", function () {
+      fileReader.onload = function () {
+      text = JSON.parse(fileReader.result)
+          for (var i = 0; i < text.source.length; i++) {
+      let opt = document.createElement('option')
+      
+      opt.innerHTML = text.source[i].name;  
+              
+              sourceName.appendChild(opt);       
+          }
+     }
+         
+         fileReader.readAsText(this.files[0])
+         
+     })
+     
+      sourceName.addEventListener('change', () => {    
+           sourceType.innerHTML = text.source[document.getElementById('sourceName')
+                                                                .selectedIndex - 1].sourcetype
+          existingNotes.innerHTML = text.source[document.getElementById('sourceName')
+                                                                .selectedIndex - 1].notes
+      
+      })
+        
+        
+        
+     addEntry.addEventListener("click", function () {
+         
+         let entryData = note.value
+         let oldText = text.source[document.getElementById('sourceName').selectedIndex - 1].notes
+         
+         oldText.push(entryData)  
+         console.log(text)
+     
+         
+
+         const blob = new Blob([JSON.stringify(text)], {type: "application/json"})
+         let a = document.createElement("a")
+         a.href = URL.createObjectURL(blob)
+         a.setAttribute("download", "entries.json")
+         document.body.appendChild(a);
+         a.click()
+         a.href = URL.revokeObjectURL(blob)
+         document.getElementById("addEntryForm").reset()
+     })
+        
+        
+
+     
+     
+    </script>
+</html>
