@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "source": {
+      "type": "array",
+      "items": [
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "description": "The name of your subject or source",
+              "type": "string"
+            },
+            "sourcetype": {
+              "description": "The type of source or subject",
+              "type": "string",
+              "enum": ["Publication",
+                       "Study",
+                       "General"]
+            },
+            "notes": {
+              "description": "Entries",
+              "type": "array",
+              "items": [
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "required": [
+            "name",
+            "sourcetype"
+          ]
+        }
+      ]
+    }
+  },
+  "required": [
+    "source"
+  ]
+}
