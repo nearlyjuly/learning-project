@@ -20,7 +20,7 @@
   const fileReader = new FileReader()
   let essaydraft = document.getElementById('essaydraft');   
   let savefile = document.getElementById('savefile')
-  let opttwo = document.createElement('option')
+  
               
     savedDataFile.addEventListener("change", function () {
       fileReader.onload = function () {
@@ -37,14 +37,14 @@
      })
               
     sourceName.addEventListener('change', () => { 
-      opttwo.length = 0  
-        let notesArray = [text.source[document.getElementById('sourceName').selectedIndex - 1].notes]
-        console.log(notesArray)
-           for  (var j = 0; j < notesArray[0].length; j++) {
-                 opttwo.innerHTML = (notesArray[j][j])
+        notes.length = 0
+        let notesArray = text.source[document.getElementById('sourceName').selectedIndex - 1].notes
+        
+           for  (var j = 0; j < notesArray.length; j++) {   
+               let opttwo = document.createElement('option')
+                 opttwo.innerHTML = notesArray[j]
                  notes.appendChild(opttwo)
-           }
-      
+        }
     })
  
      function appendDraft () {                
